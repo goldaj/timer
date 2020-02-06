@@ -1,9 +1,12 @@
 package com.quiquicheandco.sportwithmimi.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "exercice")
 public class Exercice implements Parcelable {
@@ -17,6 +20,7 @@ public class Exercice implements Parcelable {
     private Boolean saved; //TODO: see if usefull
 
     private Boolean selected; //If on selection to do some action (save/delete)/
+
 
     public Exercice() {
     }
@@ -41,11 +45,11 @@ public class Exercice implements Parcelable {
         }
     };
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -93,5 +97,16 @@ public class Exercice implements Parcelable {
         dest.writeInt(this.duration);
         dest.writeByte((byte) (this.saved ? 1 : 0));
         dest.writeByte((byte) (this.selected ? 1 : 0));
+    }
+
+    @Override
+    public String toString() {
+        return "Exercice{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", duration=" + duration +
+                ", saved=" + saved +
+                ", selected=" + selected +
+                '}';
     }
 }

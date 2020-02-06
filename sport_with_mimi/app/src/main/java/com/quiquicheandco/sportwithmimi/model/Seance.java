@@ -1,15 +1,15 @@
 package com.quiquicheandco.sportwithmimi.model;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import com.quiquicheandco.sportwithmimi.converter.SequenceConverter;
 
-import static android.arch.persistence.room.ForeignKey.CASCADE;
+import java.util.List;
 
 @Entity(tableName = "seance")
 public class Seance implements Parcelable {
@@ -17,15 +17,9 @@ public class Seance implements Parcelable {
     private Integer id;
 
     private String label;
-    @Ignore
-    private List<Sequence> sequences;
 
-    @ForeignKey
-            (entity = Sequence.class,
-                    parentColumns = "id",
-                    childColumns = "publisherId",
-                    onDelete = CASCADE)
-    private Integer sequenceId;
+    @TypeConverters(SequenceConverter.class)
+    private List<Sequence> sequences;
 
     private Boolean saved; //TODO: see if usefull
 
@@ -53,12 +47,13 @@ public class Seance implements Parcelable {
         }
     };
 
-    public int getId() {
-        return id;
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
     public String getLabel() {
@@ -102,8 +97,19 @@ public class Seance implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeString(this.label);
-        dest.writeParcelableArray((Parcelable[]) this.sequences.toArray(),flags);
+        dest.writeParcelableArray((Parcelable[]) this.sequences.toArray(), flags);
         dest.writeByte((byte) (this.saved ? 1 : 0));
         dest.writeByte((byte) (this.selected ? 1 : 0));
+    }
+
+    @Override
+    public String toString() {
+        return "Seance{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", sequences=" + sequences +
+                ", saved=" + saved +
+                ", selected=" + selected +
+                '}';
     }
 }

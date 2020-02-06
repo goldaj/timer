@@ -1,15 +1,15 @@
 package com.quiquicheandco.sportwithmimi.model;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import com.quiquicheandco.sportwithmimi.converter.ExerciceConverter;
 
-import static android.arch.persistence.room.ForeignKey.CASCADE;
+import java.util.List;
 
 @Entity(tableName = "sequence")
 public class Sequence implements Parcelable {
@@ -17,14 +17,9 @@ public class Sequence implements Parcelable {
     private Integer id;
 
     private String label;
-    @Ignore
+
+    @TypeConverters(ExerciceConverter.class)
     private List<Exercice> exercices;
-    @ForeignKey
-            (entity = Exercice.class,
-                    parentColumns = "id",
-                    childColumns = "publisherId",
-                    onDelete = CASCADE)
-    private Integer exerciceId;
 
     private Boolean saved; //TODO: see if usefull
 
@@ -51,14 +46,6 @@ public class Sequence implements Parcelable {
             return new Sequence[size];
         }
     };
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getLabel() {
         return label;
@@ -104,5 +91,24 @@ public class Sequence implements Parcelable {
         dest.writeParcelableArray((Parcelable[]) this.exercices.toArray(), flags);
         dest.writeByte((byte) (this.saved ? 1 : 0));
         dest.writeByte((byte) (this.selected ? 1 : 0));
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Sequence{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", exercices=" + exercices +
+                ", saved=" + saved +
+                ", selected=" + selected +
+                '}';
     }
 }

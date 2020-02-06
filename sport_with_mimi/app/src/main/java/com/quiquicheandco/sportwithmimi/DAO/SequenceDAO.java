@@ -4,10 +4,9 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 import android.arch.persistence.room.Update;
 
-import com.quiquicheandco.sportwithmimi.model.Exercice;
-import com.quiquicheandco.sportwithmimi.model.Seance;
 import com.quiquicheandco.sportwithmimi.model.Sequence;
 
 import java.util.List;
@@ -21,6 +20,7 @@ public interface SequenceDAO {
     @Query("DELETE FROM sequence")
     void deleteAll();
 
+    @Transaction
     @Query("SELECT * FROM sequence")
     List<Sequence> getAll();
 
