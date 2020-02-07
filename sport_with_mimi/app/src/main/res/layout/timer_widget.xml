@@ -24,7 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="MODIFY">
+            android:textSize="12dp"
+            android:text="Changer de séance [...]">
         </Button>
     </LinearLayout>
 
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:inputType="time"
             android:maxLength="2"
-            android:text="hh">
+            android:text="00">
         </EditText>
         <TextView
             android:id="@+id/timer_hour_label"
@@ -54,7 +55,7 @@
             android:layout_height="wrap_content"
             android:maxLength="2"
             android:inputType="time"
-            android:text="mm">
+            android:text="00">
         </EditText>
         <TextView
             android:id="@+id/timer_min_label"
@@ -68,7 +69,7 @@
             android:layout_height="wrap_content"
             android:inputType="time"
             android:maxLength="2"
-            android:text="ss">
+            android:text="00">
         </EditText>
         <TextView
             android:id="@+id/timer_seconds_label"
@@ -80,12 +81,14 @@
         <!-- TODO: change start to stop on click -->
         <Button
             android:id="@+id/timer_start"
+            android:onClick="onActiveTimerResetClicked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="START">
         </Button>
         <Button
             android:id="@+id/timer_reset"
+            android:onClick="onActiveTimerResetClicked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
