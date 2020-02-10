@@ -1,0 +1,188 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "74fc5cf255ce8b4c54affb9b282d63aa",
+    "entities": [
+      {
+        "tableName": "seances",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `label` TEXT, `saved` INTEGER, `selected` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "saved",
+            "columnName": "saved",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "selected",
+            "columnName": "selected",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "sequences",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `seanceId` INTEGER, `label` TEXT, `saved` INTEGER, `selected` INTEGER, FOREIGN KEY(`seanceId`) REFERENCES `seances`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "seanceId",
+            "columnName": "seanceId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "saved",
+            "columnName": "saved",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "selected",
+            "columnName": "selected",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_sequences_seanceId",
+            "unique": false,
+            "columnNames": [
+              "seanceId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sequences_seanceId` ON `${TABLE_NAME}` (`seanceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "seances",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "seanceId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "exercices",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sequenceId` INTEGER, `label` TEXT, `duration` INTEGER NOT NULL, `saved` INTEGER, `selected` INTEGER, FOREIGN KEY(`sequenceId`) REFERENCES `seances`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sequenceId",
+            "columnName": "sequenceId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "saved",
+            "columnName": "saved",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "selected",
+            "columnName": "selected",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_exercices_sequenceId",
+            "unique": false,
+            "columnNames": [
+              "sequenceId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_exercices_sequenceId` ON `${TABLE_NAME}` (`sequenceId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "seances",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sequenceId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '74fc5cf255ce8b4c54affb9b282d63aa')"
+    ]
+  }
+}

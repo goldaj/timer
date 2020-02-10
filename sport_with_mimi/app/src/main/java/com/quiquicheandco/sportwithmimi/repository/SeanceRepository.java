@@ -4,8 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import com.quiquicheandco.sportwithmimi.DAO.SeanceDAO;
-import com.quiquicheandco.sportwithmimi.model.Seance;
-import com.quiquicheandco.sportwithmimi.model.database.SportWithMimiDataBase;
+import com.quiquicheandco.sportwithmimi.db.database.SportWithMimiDataBase;
 
 import java.util.List;
 
